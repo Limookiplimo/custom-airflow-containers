@@ -30,6 +30,3 @@ def run_spark_script():
     except Exception as e:
         logging.error(f"Error in Spark job: {e}")
         raise
-
-
-run_spark_script()

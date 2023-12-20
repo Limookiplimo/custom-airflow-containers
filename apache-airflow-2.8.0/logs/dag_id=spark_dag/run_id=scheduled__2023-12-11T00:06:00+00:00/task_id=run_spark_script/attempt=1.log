@@ -24,3 +24,73 @@ airflow.exceptions.AirflowException: Cannot execute: spark-submit --master spark
 [2023-12-19T11:56:40.594+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 130 for task run_spark_script (Cannot execute: spark-submit --master spark://master:4040 --name arrow-spark ./spark_job.py. Error code is: 1.; 1516)
 [2023-12-19T11:56:40.642+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
 [2023-12-19T11:56:40.880+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2023-12-20T08:21:49.805+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spark_dag.run_spark_script scheduled__2023-12-11T00:06:00+00:00 [queued]>
+[2023-12-20T08:21:49.814+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spark_dag.run_spark_script scheduled__2023-12-11T00:06:00+00:00 [queued]>
+[2023-12-20T08:21:49.814+0000] {taskinstance.py:2171} INFO - Starting attempt 1 of 6
+[2023-12-20T08:21:49.828+0000] {taskinstance.py:2192} INFO - Executing <Task(SparkSubmitOperator): run_spark_script> on 2023-12-11 00:06:00+00:00
+[2023-12-20T08:21:49.832+0000] {standard_task_runner.py:60} INFO - Started process 683 to run task
+[2023-12-20T08:21:49.835+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'spark_dag', 'run_spark_script', 'scheduled__2023-12-11T00:06:00+00:00', '--job-id', '6', '--raw', '--subdir', 'DAGS_FOLDER/spark_job_dag.py', '--cfg-path', '/tmp/tmpbpg8udz2']
+[2023-12-20T08:21:49.837+0000] {standard_task_runner.py:88} INFO - Job 6: Subtask run_spark_script
+[2023-12-20T08:21:49.878+0000] {task_command.py:423} INFO - Running <TaskInstance: spark_dag.run_spark_script scheduled__2023-12-11T00:06:00+00:00 [running]> on host 50ed5d27a03b
+[2023-12-20T08:21:49.955+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='limoo' AIRFLOW_CTX_DAG_ID='spark_dag' AIRFLOW_CTX_TASK_ID='run_spark_script' AIRFLOW_CTX_EXECUTION_DATE='2023-12-11T00:06:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-12-11T00:06:00+00:00'
+[2023-12-20T08:21:49.961+0000] {spark_submit.py:223} INFO - Could not load connection string spark_default, defaulting to yarn
+[2023-12-20T08:21:49.962+0000] {spark_submit.py:351} INFO - Spark-Submit cmd: spark-submit --master yarn --name arrow-spark ./spark_job.py
+[2023-12-20T08:21:53.304+0000] {spark_submit.py:521} INFO - Exception in thread "main" org.apache.spark.SparkException: When running with master 'yarn' either HADOOP_CONF_DIR or YARN_CONF_DIR must be set in the environment.
+[2023-12-20T08:21:53.305+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmitArguments.error(SparkSubmitArguments.scala:650)
+[2023-12-20T08:21:53.305+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmitArguments.validateSubmitArguments(SparkSubmitArguments.scala:281)
+[2023-12-20T08:21:53.306+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmitArguments.validateArguments(SparkSubmitArguments.scala:237)
+[2023-12-20T08:21:53.306+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmitArguments.<init>(SparkSubmitArguments.scala:122)
+[2023-12-20T08:21:53.316+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmit$$anon$2$$anon$3.<init>(SparkSubmit.scala:1103)
+[2023-12-20T08:21:53.317+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmit$$anon$2.parseArguments(SparkSubmit.scala:1103)
+[2023-12-20T08:21:53.317+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmit.doSubmit(SparkSubmit.scala:86)
+[2023-12-20T08:21:53.318+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)
+[2023-12-20T08:21:53.318+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)
+[2023-12-20T08:21:53.318+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
+[2023-12-20T08:21:53.345+0000] {taskinstance.py:2699} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/apache/spark/operators/spark_submit.py", line 160, in execute
+    self._hook.submit(self._application)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/apache/spark/hooks/spark_submit.py", line 452, in submit
+    raise AirflowException(
+airflow.exceptions.AirflowException: Cannot execute: spark-submit --master yarn --name arrow-spark ./spark_job.py. Error code is: 1.
+[2023-12-20T08:21:53.352+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=spark_dag, task_id=run_spark_script, execution_date=20231211T000600, start_date=20231220T082149, end_date=20231220T082153
+[2023-12-20T08:21:53.367+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 6 for task run_spark_script (Cannot execute: spark-submit --master yarn --name arrow-spark ./spark_job.py. Error code is: 1.; 683)
+[2023-12-20T08:21:53.409+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2023-12-20T08:21:53.435+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2023-12-20T10:01:15.836+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spark_dag.run_spark_script scheduled__2023-12-11T00:06:00+00:00 [queued]>
+[2023-12-20T10:01:15.844+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spark_dag.run_spark_script scheduled__2023-12-11T00:06:00+00:00 [queued]>
+[2023-12-20T10:01:15.845+0000] {taskinstance.py:2171} INFO - Starting attempt 1 of 6
+[2023-12-20T10:01:15.856+0000] {taskinstance.py:2192} INFO - Executing <Task(SparkSubmitOperator): run_spark_script> on 2023-12-11 00:06:00+00:00
+[2023-12-20T10:01:15.860+0000] {standard_task_runner.py:60} INFO - Started process 335 to run task
+[2023-12-20T10:01:15.862+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'spark_dag', 'run_spark_script', 'scheduled__2023-12-11T00:06:00+00:00', '--job-id', '41', '--raw', '--subdir', 'DAGS_FOLDER/spark_job_dag.py', '--cfg-path', '/tmp/tmpf_1ylp6g']
+[2023-12-20T10:01:15.864+0000] {standard_task_runner.py:88} INFO - Job 41: Subtask run_spark_script
+[2023-12-20T10:01:15.902+0000] {task_command.py:423} INFO - Running <TaskInstance: spark_dag.run_spark_script scheduled__2023-12-11T00:06:00+00:00 [running]> on host 528c26b638c7
+[2023-12-20T10:01:15.964+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='limoo' AIRFLOW_CTX_DAG_ID='spark_dag' AIRFLOW_CTX_TASK_ID='run_spark_script' AIRFLOW_CTX_EXECUTION_DATE='2023-12-11T00:06:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-12-11T00:06:00+00:00'
+[2023-12-20T10:01:15.970+0000] {spark_submit.py:223} INFO - Could not load connection string spark_default, defaulting to yarn
+[2023-12-20T10:01:15.971+0000] {spark_submit.py:351} INFO - Spark-Submit cmd: spark-submit --master yarn --name arrow-spark ./spark_job.py
+[2023-12-20T10:01:19.063+0000] {spark_submit.py:521} INFO - Exception in thread "main" org.apache.spark.SparkException: When running with master 'yarn' either HADOOP_CONF_DIR or YARN_CONF_DIR must be set in the environment.
+[2023-12-20T10:01:19.063+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmitArguments.error(SparkSubmitArguments.scala:650)
+[2023-12-20T10:01:19.064+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmitArguments.validateSubmitArguments(SparkSubmitArguments.scala:281)
+[2023-12-20T10:01:19.064+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmitArguments.validateArguments(SparkSubmitArguments.scala:237)
+[2023-12-20T10:01:19.064+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmitArguments.<init>(SparkSubmitArguments.scala:122)
+[2023-12-20T10:01:19.064+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmit$$anon$2$$anon$3.<init>(SparkSubmit.scala:1103)
+[2023-12-20T10:01:19.064+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmit$$anon$2.parseArguments(SparkSubmit.scala:1103)
+[2023-12-20T10:01:19.064+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmit.doSubmit(SparkSubmit.scala:86)
+[2023-12-20T10:01:19.064+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)
+[2023-12-20T10:01:19.064+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)
+[2023-12-20T10:01:19.064+0000] {spark_submit.py:521} INFO - at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
+[2023-12-20T10:01:19.110+0000] {taskinstance.py:2699} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/apache/spark/operators/spark_submit.py", line 160, in execute
+    self._hook.submit(self._application)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/apache/spark/hooks/spark_submit.py", line 452, in submit
+    raise AirflowException(
+airflow.exceptions.AirflowException: Cannot execute: spark-submit --master yarn --name arrow-spark ./spark_job.py. Error code is: 1.
+[2023-12-20T10:01:19.116+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=spark_dag, task_id=run_spark_script, execution_date=20231211T000600, start_date=20231220T100115, end_date=20231220T100119
+[2023-12-20T10:01:19.150+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 41 for task run_spark_script (Cannot execute: spark-submit --master yarn --name arrow-spark ./spark_job.py. Error code is: 1.; 335)
+[2023-12-20T10:01:19.184+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2023-12-20T10:01:19.205+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check

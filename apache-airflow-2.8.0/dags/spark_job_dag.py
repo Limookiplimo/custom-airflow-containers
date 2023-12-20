@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
-from spark_job import run_spark_script
 
 
 default_args = {
@@ -18,8 +17,8 @@ dag = DAG(
     schedule='*/3 * * * *',
 )
 run_spark_task = SparkSubmitOperator(
-    task_id='run_spark_script',
-    application='./spark_job.py',
+    task_id='spark_script',
+    application='./dags/spark_job.py',
     conn_id="spark_default",
     verbose=False,
     dag=dag,
